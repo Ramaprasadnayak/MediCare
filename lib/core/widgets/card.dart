@@ -25,7 +25,7 @@ class MyCard extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
           child: Row(
             children: [
-              Icon(prefixIcon, size: 30, color: Colors.blue),
+              Icon(prefixIcon, size: 30,),
               const SizedBox(width: 16),
 
               Expanded(child: Text(text)),

@@ -4,7 +4,7 @@ import 'package:maruthimedical/theme/theme_providers.dart';
 import 'package:provider/provider.dart';
 import 'package:maruthimedical/features/authentication/login_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../services/api_service.dart';
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
   @override
@@ -33,7 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final List<Widget> pages = [
-      ElevatedButton(onPressed: fetchData, child: const Text("Fetch")),
+      ElevatedButton(onPressed: (){}, child: const Text("Fetch")),
       Center(child: Text("categories")),
       Center(
         child: ElevatedButton(

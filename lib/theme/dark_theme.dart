@@ -13,6 +13,20 @@ ThemeData darkTheme = ThemeData(
       borderRadius: BorderRadius.circular(12),
     ),
   ),
+  iconTheme: IconThemeData(
+    color: Colors.blueAccent
+  ),
+  outlinedButtonTheme: OutlinedButtonThemeData(
+    style: ButtonStyle(
+      foregroundColor: WidgetStatePropertyAll(Colors.blue),
+      side:WidgetStatePropertyAll(
+      BorderSide(
+        color: Colors.blue,
+        width: 2,
+      )
+      ),
+    ),
+  ),
   inputDecorationTheme:InputDecorationTheme(
     filled: true,
     fillColor: AppColors.darkBackground2,

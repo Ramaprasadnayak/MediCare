@@ -1,11 +1,9 @@
-import 'dart:convert';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:maruthimedical/core/widgets/button.dart';
 import 'package:maruthimedical/core/widgets/text_field.dart';
-import 'package:http/http.dart' as http;
-import 'package:maruthimedical/features/home/home_screen.dart';
+import 'package:maruthimedical/services/login_register.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -17,41 +15,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
   TextEditingController usrname = TextEditingController();
   TextEditingController phno = TextEditingController();
   TextEditingController password = TextEditingController();
-  Future<void> register() async {
-    try {
-      final response = await http.post(
-        Uri.parse("http://192.168.1.5:8000/auth/register"),
-        headers: {"Content-Type": "application/json"},
-        body: jsonEncode({
-          "username": usrname.text.trim(),
-          "phone": phno.text.trim(),
-          "password": password.text.trim(),
-        }),
-      );
-      final data = jsonDecode(response.body);
-      if (response.statusCode == 200 && data["message"] == "Registration Successful") {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text("Registration Successful"),
-            backgroundColor: Colors.green,
-            duration: Duration(seconds: 2),
-          ),
-        );
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const HomeScreen()));
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(data["message"] ?? "Registration Failed"),
-            backgroundColor: Colors.red,
-          ),
-        );
-      }
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Error: $e"), backgroundColor: Colors.red),
-      );
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -150,7 +113,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 height: 56,
                 width: 380,
                 text: "Register",
-                onpressed: register,
+                onpressed: ()=>register(context,usrname,phno,password),
               ),
               const SizedBox(height: 18),
               RichText(

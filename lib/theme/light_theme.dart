@@ -12,6 +12,20 @@ ThemeData lightTheme = ThemeData(
       borderRadius: BorderRadius.circular(12),
     ),
   ),
+  iconTheme: IconThemeData(
+    color: Color(0xFF2563EB)
+  ),
+  outlinedButtonTheme: OutlinedButtonThemeData(
+    style: ButtonStyle(
+      foregroundColor: WidgetStatePropertyAll(Color(0xFF2563EB)),
+      side:WidgetStatePropertyAll(
+      BorderSide(
+        color: Color(0xFF2563EB),
+        width: 2,
+      )
+      ),
+    ),
+  ),
   inputDecorationTheme:InputDecorationTheme(
     filled: true,
     fillColor: Colors.white,

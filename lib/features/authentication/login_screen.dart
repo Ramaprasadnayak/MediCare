@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:maruthimedical/core/widgets/button.dart';
 import 'package:maruthimedical/core/widgets/text_field.dart';
 import "./register_screen.dart";
+import 'package:maruthimedical/services/login_register.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -95,10 +96,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                     SizedBox(width: 10),
-                  ],
+                  ], 
                 ),
                 const SizedBox(height: 40),
-                Button(height: 56, width: 380, text: "Login",onpressed: (){}),
+                Button(height: 56, width: 380, text: "Login",onpressed: ()=>login(context, usrname, password)),
                 const SizedBox(height: 18),
                 RichText(
                   text: TextSpan(

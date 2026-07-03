@@ -19,14 +19,30 @@ class ProfilePage extends StatelessWidget {
     return SafeArea(
       child: SingleChildScrollView(
         child: Column(
-          children: profileOptions.entries.map((entry) {
-            return MyCard(
-              prefixIcon: entry.value[0] as IconData,
-              text: entry.value[1] as String,
-              addButton: entry.value[2] as bool,
-              onPress: entry.value[3] as VoidCallback?,
-            );
-          }).toList(),
+          children: [
+            SizedBox(height: 20),
+            CircleAvatar(
+              radius: 55,
+              backgroundColor: Colors.grey.shade300,
+              child: Icon(Icons.person, size: 60, color: Colors.grey.shade700),
+            ),
+            SizedBox(height: 15),
+            OutlinedButton(
+              onPressed: () {}, 
+              child: const Text("Edit Profile"),
+            ),
+            SizedBox(height: 20),
+            Column(
+              children: profileOptions.entries.map((entry) {
+                return MyCard(
+                  prefixIcon: entry.value[0] as IconData,
+                  text: entry.value[1] as String,
+                  addButton: entry.value[2] as bool,
+                  onPress: entry.value[3] as VoidCallback?,
+                );
+              }).toList(),
+            ),
+          ],
         ),
       ),
     );
