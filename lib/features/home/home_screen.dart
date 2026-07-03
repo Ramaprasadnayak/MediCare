@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:maruthimedical/app.dart';
+import 'package:maruthimedical/features/home/profile_page.dart';
+import 'package:maruthimedical/theme/theme_providers.dart';
+import 'package:provider/provider.dart';
 import 'package:maruthimedical/features/authentication/login_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -11,10 +14,14 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int selectedIndex = 0;
 
-  void setTheme(int idx) {
-    final appState = context.findAncestorStateOfType<MyAppState>();
+  void setTheme(int idx) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setInt("theme", idx);
+  }
 
-    appState?.changeTheme(idx);
+  @override
+  void initState() {
+    super.initState();
   }
 
   void navigateBottonBar(int index) {
@@ -28,19 +35,23 @@ class _HomeScreenState extends State<HomeScreen> {
     final List<Widget> pages = [
       Center(child: Text("Home page")),
       Center(child: Text("categories")),
-      Center(child: Text("orders")),
       Center(
         child: ElevatedButton(
-          onPressed: () => setTheme(1),
-          child: Text("light"),
+          onPressed: () {
+            context.read<ThemeProvider>().setTheme(ThemeMode.light);
+          },
+          child: const Text("Light"),
         ),
       ),
       Center(
         child: ElevatedButton(
-          onPressed: () => setTheme(0),
-          child: Text("dark"),
+          onPressed: () {
+            context.read<ThemeProvider>().setTheme(ThemeMode.dark);
+          },
+          child: const Text("Dark"),
         ),
       ),
+      ProfilePage()
     ];
 
     return Scaffold(

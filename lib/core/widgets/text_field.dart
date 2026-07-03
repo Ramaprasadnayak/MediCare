@@ -45,30 +45,35 @@ class _TextFieldState extends State<MyTextField> {
         ],
       ),
       child: TextField(
-        style: const TextStyle(
+        style: TextStyle(
           fontSize: 16,
           fontWeight: FontWeight.w500,
-          color: Color(0xFF1E1E1E),
+          color: Theme.of(context).textTheme.bodyMedium?.color,
         ),
         obscureText: isvisible,
         controller: widget.controller,
         decoration: InputDecoration(
-          filled: true,
-          fillColor: Colors.white,
-          prefixIcon: Icon(widget.prefixicon, color: Color(0xFF6B7A99)),
+          prefixIcon: Icon(
+            widget.prefixicon,
+            color: Theme.of(context).inputDecorationTheme.prefixIconColor,
+          ),
           hintText: widget.hintText,
-          hintStyle: TextStyle(
+          hintStyle: Theme.of(context).inputDecorationTheme.hintStyle?.copyWith(
             fontSize: 16,
             fontWeight: FontWeight.w400,
-            color: Color(0xFF7A7A7A),
           ),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(30),
-            borderSide: BorderSide(color: Colors.grey.shade300, width: 1),
+            borderSide: Theme.of(
+              context,
+            ).inputDecorationTheme.enabledBorder!.borderSide,
           ),
+
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(30),
-            borderSide: BorderSide(color: Colors.grey.shade300, width: 1),
+            borderSide: Theme.of(
+              context,
+            ).inputDecorationTheme.focusedBorder!.borderSide,
           ),
           suffixIcon: widget.eyebutton
               ? IconButton(
@@ -77,7 +82,7 @@ class _TextFieldState extends State<MyTextField> {
                         ? Icons.visibility_off_outlined
                         : Icons.visibility_outlined,
                     size: 22,
-                    color: Color(0xFF6B7A99),
+                    color: Theme.of(context).inputDecorationTheme.suffixIconColor,
                   ),
                   onPressed: () {
                     setState(() {
