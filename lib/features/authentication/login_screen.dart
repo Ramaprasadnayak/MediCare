@@ -98,7 +98,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ],
                 ),
                 const SizedBox(height: 40),
-                Button(height: 56, width: 380, text: "Login"),
+                Button(height: 56, width: 380, text: "Login",onpressed: (){}),
                 const SizedBox(height: 18),
                 RichText(
                   text: TextSpan(
