@@ -22,7 +22,7 @@ class MyCard extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: Card(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 22),
           child: Row(
             children: [
               Icon(prefixIcon, size: 30,),

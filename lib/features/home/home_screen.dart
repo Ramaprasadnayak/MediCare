@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:maruthimedical/features/home/home_page.dart';
 import 'package:maruthimedical/features/home/profile_page.dart';
 import 'package:maruthimedical/theme/theme_providers.dart';
 import 'package:provider/provider.dart';
@@ -33,7 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final List<Widget> pages = [
-      ElevatedButton(onPressed: (){}, child: const Text("Fetch")),
+      HomePage(),
       Center(child: Text("categories")),
       Center(
         child: ElevatedButton(
