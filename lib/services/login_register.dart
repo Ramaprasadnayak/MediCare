@@ -1,13 +1,14 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:maruthimedical/features/home/home_screen.dart';
 import 'package:flutter/material.dart';
 
-
 Future<void> register(BuildContext context,TextEditingController usrname,TextEditingController phno,TextEditingController password) async {
   try {
+    String apiUrl = dotenv.env["API_URL"]!;
     final response = await http.post(
-      Uri.parse("http://192.168.1.5:8000/auth/register"),
+      Uri.parse("$apiUrl/auth/register"),
       headers: {"Content-Type": "application/json"},
       body: jsonEncode({
         "username": usrname.text.trim(),
@@ -46,8 +47,9 @@ Future<void> register(BuildContext context,TextEditingController usrname,TextEdi
 
 Future<void> login(BuildContext context,TextEditingController usrname,TextEditingController password) async{
   try{
+    String apiUrl = dotenv.env["API_URL"]!;
     final response=await http.post(
-      Uri.parse("http://192.168.1.5:8000/auth/login"),
+      Uri.parse("$apiUrl/auth/login"),
       headers: {"Content-Type": "application/json"},
       body: jsonEncode({
         "username": usrname.text.trim(),
@@ -56,6 +58,7 @@ Future<void> login(BuildContext context,TextEditingController usrname,TextEditin
     );
     final data=jsonDecode(response.body);
     if(response.statusCode==200 && data["message"]=="Login Successful"){
+      
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("Login Successful"),backgroundColor: Colors.green,duration: Duration(seconds: 2))
       );

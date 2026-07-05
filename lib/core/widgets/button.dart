@@ -4,12 +4,16 @@ class Button extends StatefulWidget {
   final double height, width;
   final String text;
   final void Function()? onpressed;
+  final bool icon;
+  final IconData? sufixicon;
   const Button({
     super.key,
     required this.height,
     required this.width,
     required this.text,
     required this.onpressed,
+    this.icon=false,
+    this.sufixicon
   });
   @override
   State<StatefulWidget> createState() => _ButtonState();
@@ -19,7 +23,7 @@ class _ButtonState extends State<Button> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap:widget.onpressed,
+      onTap: widget.onpressed,
       child: Container(
         height: widget.height,
         width: widget.width,
@@ -39,9 +43,19 @@ class _ButtonState extends State<Button> {
           ),
         ),
         child: Center(
-          child: Text(
-            widget.text,
-            style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                widget.text,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              if (widget.icon && widget.sufixicon != null)
+              Icon(widget.sufixicon,color: Colors.white,size: 16),
+            ],
           ),
         ),
       ),

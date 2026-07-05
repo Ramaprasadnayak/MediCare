@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:maruthimedical/features/home/home_page.dart';
 import 'package:maruthimedical/features/home/profile_page.dart';
+import 'package:maruthimedical/features/notification/notification.dart';
 import 'package:maruthimedical/theme/theme_providers.dart';
 import 'package:provider/provider.dart';
 import 'package:maruthimedical/features/authentication/login_screen.dart';
@@ -75,7 +76,7 @@ class _HomeScreenState extends State<HomeScreen> {
             icon: Icon(Icons.shopping_cart_outlined),
           ),
           IconButton(
-            onPressed: () {},
+            onPressed: ()=>Navigator.push(context, MaterialPageRoute(builder: (context)=>NotificationPage())),
             icon: Icon(Icons.notifications_outlined),
           ),
         ],
