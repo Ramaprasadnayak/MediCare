@@ -1,8 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:maruthimedical/widgets/card.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
+
+  @override
+  State<ProfilePage> createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
+  String username="";
+  @override
+  void initState() {
+    super.initState();
+    loadToken();
+  }
+
+  Future<void> loadToken() async {
+    final prefs = await SharedPreferences.getInstance();
+    final savedToken = prefs.getString("access_token");
+    if (savedToken != null) {
+      final decoded = JwtDecoder.decode(savedToken);
+      setState(() {
+        username = decoded["sub"];
+        username.length > 15 ? "${username.substring(0, 15)}..." : username; 
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,16 +47,15 @@ class ProfilePage extends StatelessWidget {
         child: Column(
           children: [
             SizedBox(height: 20),
+            Column(children: [Text("hello, $username")]),
+            SizedBox(height: 20),
             CircleAvatar(
               radius: 55,
               backgroundColor: Colors.grey.shade300,
               child: Icon(Icons.person, size: 60, color: Colors.grey.shade700),
             ),
             SizedBox(height: 15),
-            OutlinedButton(
-              onPressed: () {}, 
-              child: const Text("Edit Profile"),
-            ),
+            OutlinedButton(onPressed: () {}, child: const Text("Edit Profile")),
             SizedBox(height: 20),
             Column(
               children: profileOptions.entries.map((entry) {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:maruthimedical/features/categories/category_page.dart';
 import 'package:maruthimedical/features/home/home_page.dart';
-import 'package:maruthimedical/features/home/profile_page.dart';
+import 'package:maruthimedical/features/profile/profile_page.dart';
 import 'package:maruthimedical/features/notification/notification.dart';
 import 'package:maruthimedical/theme/theme_providers.dart';
 import 'package:provider/provider.dart';
@@ -35,24 +36,10 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final List<Widget> pages = [
-      HomePage(),
-      Center(child: Text("categories")),
-      Center(
-        child: ElevatedButton(
-          onPressed: () {
-            context.read<ThemeProvider>().setTheme(ThemeMode.light);
-          },
-          child: const Text("Light"),
-        ),
-      ),
-      Center(
-        child: ElevatedButton(
-          onPressed: () {
-            context.read<ThemeProvider>().setTheme(ThemeMode.dark);
-          },
-          child: const Text("Dark"),
-        ),
-      ),
+      HomePage(navigate:navigateBottonBar),
+      CategoryPage(),
+      Text("orders"),
+      Text("cart"),
       ProfilePage(),
     ];
 

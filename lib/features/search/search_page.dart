@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:maruthimedical/widgets/medicine_card.dart';
 import 'package:maruthimedical/services/search_medicine.dart';
-// import 'package:maruthimedical/services/search_medicine.dart';
 
 class SearchPage extends StatefulWidget {
   final List<Map<String, dynamic>> medicineData;

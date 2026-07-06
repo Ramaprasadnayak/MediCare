@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:maruthimedical/core/constants/carosel_list.dart';
 
 class Carosel extends StatefulWidget {
   const Carosel({super.key});
@@ -8,14 +9,7 @@ class Carosel extends StatefulWidget {
 }
 
 class _CaroselState extends State<Carosel> {
-  final List<String> imgList = [
-    "assets/carosel/ayurveda.png",
-    "assets/carosel/savings.png",
-    "assets/carosel/tips.png",
-    "assets/carosel/ayurveda.png",
-    "assets/carosel/ayurveda.png",
-    "assets/carosel/ayurveda.png",
-  ];
+  
   int currentIndex = 0;
   @override
   Widget build(BuildContext context) {

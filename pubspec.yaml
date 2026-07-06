@@ -32,6 +32,7 @@ dependencies:
     sdk: flutter
   carousel_slider: ^5.1.2
   http: ^1.2.1
+  jwt_decoder: ^2.0.1
   flutter_dotenv: ^5.2.1
   google_fonts: ^6.3.0
   provider: ^6.1.5
@@ -69,6 +70,17 @@ flutter:
     - assets/carosel/ayurveda.png
     - assets/carosel/savings.png
     - assets/carosel/tips.png 
+    - assets/categories/tableticon.png 
+    - assets/categories/ayurvedicicon.png
+    - assets/categories/skincareicon.png
+    - assets/categories/respiratoryicon.png
+    - assets/categories/syrupicon.png 
+    - assets/categories/eyecareicon.png
+    - assets/categories/personalcareicon.png
+    - assets/categories/firstaidicon.png 
+    - assets/categories/deviceicon.png 
+    - assets/categories/babycareicon.png 
+    
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
