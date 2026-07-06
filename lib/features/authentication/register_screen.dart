@@ -1,8 +1,8 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:maruthimedical/core/widgets/button.dart';
-import 'package:maruthimedical/core/widgets/text_field.dart';
+import 'package:maruthimedical/widgets/button.dart';
+import 'package:maruthimedical/widgets/text_field.dart';
 import 'package:maruthimedical/services/login_register.dart';
 
 class RegisterScreen extends StatefulWidget {

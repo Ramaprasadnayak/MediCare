@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:maruthimedical/features/home/home_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 Future<void> register(BuildContext context,TextEditingController usrname,TextEditingController phno,TextEditingController password) async {
   try {
@@ -18,6 +19,9 @@ Future<void> register(BuildContext context,TextEditingController usrname,TextEdi
     );
     final data = jsonDecode(response.body);
     if (response.statusCode == 200 && data["message"] == "Registration Successful") {
+      final String token = data["access_token"];
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString("access_token", token);
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text("Registration Successful"),
@@ -58,7 +62,9 @@ Future<void> login(BuildContext context,TextEditingController usrname,TextEditin
     );
     final data=jsonDecode(response.body);
     if(response.statusCode==200 && data["message"]=="Login Successful"){
-      
+      final String token = data["access_token"];
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString("access_token", token);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("Login Successful"),backgroundColor: Colors.green,duration: Duration(seconds: 2))
       );

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:maruthimedical/core/widgets/card.dart';
+import 'package:maruthimedical/widgets/card.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});

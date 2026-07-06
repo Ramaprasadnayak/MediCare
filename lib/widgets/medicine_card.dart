@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:maruthimedical/core/widgets/button.dart';
+import 'package:maruthimedical/widgets/button.dart';
 
 class MyMedicineCard extends StatelessWidget {
   final Map<String, dynamic> medicine;
