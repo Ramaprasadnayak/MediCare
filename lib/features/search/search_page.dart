@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:maruthimedical/services/get_detail.dart';
 import 'package:maruthimedical/widgets/medicine_card.dart';
 import 'package:maruthimedical/services/search_medicine.dart';
 
@@ -13,6 +14,19 @@ class SearchPage extends StatefulWidget {
 
 class _SearchPageState extends State<SearchPage> {
   TextEditingController search = TextEditingController();
+  int? userId;
+  @override
+  void initState() { 
+    super.initState();
+    getuserId();
+  }
+  Future<void> getuserId() async {
+    final id=await loadTokenId();
+    setState(() {
+      userId=id;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,7 +58,7 @@ class _SearchPageState extends State<SearchPage> {
               spacing: 15,
               runSpacing: 15,
               children: widget.medicineData.map<Widget>(
-                    (medicines) => MyMedicineCard(medicine: medicines),
+                    (medicines) => MyMedicineCard(userid:userId,medicine: medicines),
                   )
                   .toList(),
             ),

@@ -4,6 +4,7 @@ import 'package:maruthimedical/theme/app_colors.dart';
 
 
 ThemeData darkTheme = ThemeData(
+  brightness: Brightness.dark,
   scaffoldBackgroundColor: AppColors.darkBackground1,
   appBarTheme: AppBarTheme(backgroundColor: AppColors.darkBackground1,foregroundColor: AppColors.darkText),
   cardTheme: CardThemeData(

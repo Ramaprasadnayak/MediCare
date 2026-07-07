@@ -21,9 +21,10 @@ class _CaroselState extends State<Carosel> {
           ),).toList(),
           options: CarouselOptions(
             height: 180,
+            enableInfiniteScroll: false,
             autoPlay: true,
             enlargeCenterPage: true,
-            autoPlayInterval: const Duration(seconds: 5),
+            autoPlayInterval: const Duration(seconds: 4),
             onPageChanged: (index, reason) {
               setState(() {
                 currentIndex = index;

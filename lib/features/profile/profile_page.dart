@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:maruthimedical/services/get_detail.dart';
 import 'package:maruthimedical/widgets/card.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:jwt_decoder/jwt_decoder.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -11,21 +10,19 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  String username="";
+  String username = "";
   @override
   void initState() {
     super.initState();
-    loadToken();
+    getUsername();
   }
 
-  Future<void> loadToken() async {
-    final prefs = await SharedPreferences.getInstance();
-    final savedToken = prefs.getString("access_token");
-    if (savedToken != null) {
-      final decoded = JwtDecoder.decode(savedToken);
+  Future<void> getUsername() async {
+    final name = await loadTokenSub();
+
+    if (name != null) {
       setState(() {
-        username = decoded["sub"];
-        username.length > 15 ? "${username.substring(0, 15)}..." : username; 
+        username = name.length > 15 ? "${name.substring(0, 15)}..." : name;
       });
     }
   }

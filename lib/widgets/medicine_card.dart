@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:maruthimedical/features/authentication/login_screen.dart';
+import 'package:maruthimedical/services/cart_action.dart';
 import 'package:maruthimedical/widgets/button.dart';
 
 class MyMedicineCard extends StatelessWidget {
   final Map<String, dynamic> medicine;
-  const MyMedicineCard({super.key, required this.medicine});
+  final int? userid; 
+  const MyMedicineCard({super.key, required this.medicine,required this.userid});
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +34,13 @@ class MyMedicineCard extends StatelessWidget {
                 height: 40,
                 width: 150,
                 text: "Add to cart",
-                onpressed: () {},
+                onpressed: () {
+                  if(userid!=null){
+                    addToCart(userid, medicine["med_id"], context);
+                  }else{
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginScreen()));
+                  }
+                },
                 icon: true,
                 sufixicon: Icons.shopping_cart_outlined,
               ),
