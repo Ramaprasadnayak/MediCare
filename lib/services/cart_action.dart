@@ -101,3 +101,36 @@ Future<void> alterQuantity(int? userid,int medid,int action,BuildContext context
   }
 }
 
+Future<void> deleteFromCart(int? userid,int medid,BuildContext context) async{
+  try {
+    String apiUrl=dotenv.env["API_URL"]!;
+    final response=await http.delete(
+      Uri.parse("$apiUrl/cart/deletefromcart"),
+      headers: {"Content-Type": "application/json"},
+      body: jsonEncode({
+        "usrid": userid,
+        "medid": medid,
+      }),
+    );
+    final data = jsonDecode(response.body);
+    if (response.statusCode == 200 && data["message"] == "Deleted from cart") {
+      ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text("Item deleted"),
+        backgroundColor: Colors.green,
+      ),
+  );
+    }else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(data["message"] ?? "Something went wrong"),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
+  } catch (e) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text("Something went wrong :$e"),duration: Duration(seconds: 2),backgroundColor: Colors.red)
+    );
+  }
+}

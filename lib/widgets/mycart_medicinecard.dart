@@ -3,8 +3,12 @@ import 'package:maruthimedical/services/cart_action.dart';
 
 class MyCartMedicineCard extends StatefulWidget {
   final Map<String, dynamic> medicine;
-  final int? userid; 
-  const MyCartMedicineCard({super.key, required this.medicine,required this.userid});
+  final int? userid;
+  const MyCartMedicineCard({
+    super.key,
+    required this.medicine,
+    required this.userid,
+  });
   @override
   State<MyCartMedicineCard> createState() => _MyCartMedicineCardState();
 }
@@ -16,6 +20,7 @@ class _MyCartMedicineCardState extends State<MyCartMedicineCard> {
     super.initState();
     quantity = widget.medicine["quantity"];
   }
+
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
@@ -46,25 +51,89 @@ class _MyCartMedicineCardState extends State<MyCartMedicineCard> {
                 Column(
                   children: [
                     IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          builder: (_) => AlertDialog(
+                            title: Text("alert"),
+                            content: Text("delete this item ?"),
+                            actions: [
+                              TextButton(
+                                onPressed: () => Navigator.pop(context),
+                                child: const Text("Cancel"),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  deleteFromCart(
+                                    widget.userid,
+                                    widget.medicine["medid"],
+                                    context,
+                                  );
+                                  Navigator.of(context).pop();
+                                },
+                                child: Text("OK"),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
                       icon: Icon(Icons.delete_outline, color: Colors.red),
                     ),
                     Card(
-                      color:isDark? const Color(0xFF374151): const Color(0xFFE2E8F0),
+                      color: isDark
+                          ? const Color(0xFF374151)
+                          : const Color(0xFFE2E8F0),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(50),
                       ),
                       child: Row(
                         children: [
-                          TextButton(onPressed: () {alterQuantity(widget.userid, widget.medicine["medid"], 0, context).then((_){setState(() {quantity--;});});}, child: Text("-",style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        fontSize: 15,
-                      ))),
-                          Text("$quantity",style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        fontSize: 15,
-                      )),
-                          TextButton(onPressed: () {alterQuantity(widget.userid, widget.medicine["medid"], 1, context).then((_){setState(() {quantity++;});});}, child: Text("+",style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        fontSize: 15,
-                      ))),
+                          TextButton(
+                            onPressed: () {
+                              alterQuantity(
+                                widget.userid,
+                                widget.medicine["medid"],
+                                0,
+                                context,
+                              ).then((_) {
+                                setState(() {
+                                  quantity--;
+                                });
+                              });
+                            },
+                            child: Text(
+                              "-",
+                              style: Theme.of(
+                                context,
+                              ).textTheme.bodyMedium?.copyWith(fontSize: 15),
+                            ),
+                          ),
+                          Text(
+                            "$quantity",
+                            style: Theme.of(
+                              context,
+                            ).textTheme.bodyMedium?.copyWith(fontSize: 15),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              alterQuantity(
+                                widget.userid,
+                                widget.medicine["medid"],
+                                1,
+                                context,
+                              ).then((_) {
+                                setState(() {
+                                  quantity++;
+                                });
+                              });
+                            },
+                            child: Text(
+                              "+",
+                              style: Theme.of(
+                                context,
+                              ).textTheme.bodyMedium?.copyWith(fontSize: 15),
+                            ),
+                          ),
                         ],
                       ),
                     ),
