@@ -20,6 +20,7 @@ class MyMedicineCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Image.asset(medicine["image_url"],width: 40,height: 40,),
               Text(
                 medicine["medicine_name"],
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
