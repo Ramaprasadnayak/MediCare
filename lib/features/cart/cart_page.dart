@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:maruthimedical/providers/cart_provider.dart';
 import 'package:maruthimedical/services/cart_action.dart';
 import 'package:maruthimedical/services/get_detail.dart';
 import 'package:maruthimedical/widgets/mycart_medicinecard.dart';
+import 'package:provider/provider.dart';
 
 class CartPage extends StatefulWidget {
   const CartPage({super.key});
@@ -11,10 +13,7 @@ class CartPage extends StatefulWidget {
 }
 
 class _CartPageState extends State<CartPage> {
-  List<Map<String, dynamic>> cartdata = [];
   int? userId;
-  double grandTotal = 0;
-  double get deliveryfee => grandTotal > 500 ? 0 : 40;
   @override
   void initState() {
     super.initState();
@@ -26,14 +25,7 @@ class _CartPageState extends State<CartPage> {
       userId = await loadTokenId();
       if (userId != null) {
         final data = await cartSearch(userId, context);
-        final total = data.fold<double>(
-          0.0,
-          (sum, item) => sum + (item["total"] as num).toDouble(),
-        );
-        setState(() {
-          cartdata = data;
-          grandTotal = total;
-        });
+        Provider.of<CartProvider>(context, listen: false).setCart(data);
       }
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -47,6 +39,7 @@ class _CartPageState extends State<CartPage> {
 
   @override
   Widget build(BuildContext context) {
+    final cartProvider = context.watch<CartProvider>();
     return SingleChildScrollView(
       child: Padding(
         padding: EdgeInsets.all(15),
@@ -62,7 +55,7 @@ class _CartPageState extends State<CartPage> {
             ),
             SizedBox(height: 20),
             Column(
-              children: cartdata
+              children: cartProvider.cartData
                   .map<Widget>(
                     (medicines) => MyCartMedicineCard(userid: userId,medicine: medicines),
                   )
@@ -92,7 +85,7 @@ class _CartPageState extends State<CartPage> {
                           ).textTheme.bodyMedium?.copyWith(fontSize: 20),
                         ),
                         Text(
-                          "$grandTotal",
+                          cartProvider.grandTotal.toStringAsFixed(2),
                           style: Theme.of(
                             context,
                           ).textTheme.bodyMedium?.copyWith(fontSize: 20),
@@ -110,7 +103,7 @@ class _CartPageState extends State<CartPage> {
                           ).textTheme.bodyMedium?.copyWith(fontSize: 20),
                         ),
                         Text(
-                          "₹$deliveryfee",
+                          "₹${cartProvider.deliveryFee}",
                           style: Theme.of(
                             context,
                           ).textTheme.bodyMedium?.copyWith(fontSize: 20),
@@ -130,7 +123,7 @@ class _CartPageState extends State<CartPage> {
                           ).textTheme.bodyMedium?.copyWith(fontSize: 23),
                         ),
                         Text(
-                          "₹${grandTotal + deliveryfee}",
+                          (cartProvider.grandTotal + cartProvider.deliveryFee).toStringAsFixed(2),
                           style: Theme.of(
                             context,
                           ).textTheme.bodyMedium?.copyWith(fontSize: 23),

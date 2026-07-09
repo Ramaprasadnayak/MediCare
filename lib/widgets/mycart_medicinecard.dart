@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:maruthimedical/providers/cart_provider.dart';
 import 'package:maruthimedical/services/cart_action.dart';
+import 'package:provider/provider.dart';
 
 class MyCartMedicineCard extends StatefulWidget {
   final Map<String, dynamic> medicine;
@@ -14,13 +16,6 @@ class MyCartMedicineCard extends StatefulWidget {
 }
 
 class _MyCartMedicineCardState extends State<MyCartMedicineCard> {
-  late int quantity;
-  @override
-  void initState() {
-    super.initState();
-    quantity = widget.medicine["quantity"];
-  }
-
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
@@ -69,7 +64,10 @@ class _MyCartMedicineCardState extends State<MyCartMedicineCard> {
                                     widget.medicine["medid"],
                                     context,
                                   );
-                                  Navigator.of(context).pop();
+                                  context.read<CartProvider>().removeItem(
+                                    widget.medicine["medid"],
+                                  );
+                                  Navigator.pop(context);
                                 },
                                 child: Text("OK"),
                               ),
@@ -89,17 +87,16 @@ class _MyCartMedicineCardState extends State<MyCartMedicineCard> {
                       child: Row(
                         children: [
                           TextButton(
-                            onPressed: () {
-                              alterQuantity(
+                            onPressed: () async {
+                              await alterQuantity(
                                 widget.userid,
                                 widget.medicine["medid"],
                                 0,
                                 context,
-                              ).then((_) {
-                                setState(() {
-                                  quantity--;
-                                });
-                              });
+                              );
+                              context.read<CartProvider>().decreaseQuantity(
+                                widget.medicine["medid"],
+                              );
                             },
                             child: Text(
                               "-",
@@ -109,23 +106,22 @@ class _MyCartMedicineCardState extends State<MyCartMedicineCard> {
                             ),
                           ),
                           Text(
-                            "$quantity",
+                            "${widget.medicine["quantity"]}",
                             style: Theme.of(
                               context,
                             ).textTheme.bodyMedium?.copyWith(fontSize: 15),
                           ),
                           TextButton(
-                            onPressed: () {
-                              alterQuantity(
+                            onPressed: () async {
+                              await alterQuantity(
                                 widget.userid,
                                 widget.medicine["medid"],
                                 1,
                                 context,
-                              ).then((_) {
-                                setState(() {
-                                  quantity++;
-                                });
-                              });
+                              );
+                              context.read<CartProvider>().increaseQuantity(
+                                widget.medicine["medid"],
+                              );
                             },
                             child: Text(
                               "+",

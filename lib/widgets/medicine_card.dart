@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:maruthimedical/features/authentication/login_screen.dart';
 import 'package:maruthimedical/services/cart_action.dart';
 import 'package:maruthimedical/widgets/button.dart';
+import 'package:maruthimedical/widgets/product_page.dart';
 
 class MyMedicineCard extends StatelessWidget {
   final Map<String, dynamic> medicine;
@@ -17,17 +18,32 @@ class MyMedicineCard extends StatelessWidget {
     String name = medicine["medicine_name"];
     String medname = name.length > 25 ? "${name.substring(0, 25)}..." : name;
     return SizedBox(
-      height: 300,
+      height: 330,
       width: 205,
       child: Card(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Image.asset(
-              medicine["image_url"],
-              width: double.infinity,
-              height: 140,
-              fit: BoxFit.cover,
+            GestureDetector(
+              onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => ProductPage(
+                    medid: medicine["med_id"],
+                    userid: userid,
+                    medName: name,
+                    price: double.parse(medicine["price"].toString()),
+                    category: medicine["category"],
+                    medUrl: medicine["image_url"],
+                  ),
+                ),
+              ),
+              child: Image.asset(
+                medicine["image_url"],
+                width: double.infinity,
+                height: 140,
+                fit: BoxFit.cover,
+              ),
             ),
             Padding(
               padding: EdgeInsets.all(2),
@@ -63,7 +79,7 @@ class MyMedicineCard extends StatelessWidget {
                     icon: true,
                     sufixicon: Icons.shopping_cart_outlined,
                   ),
-                  SizedBox(height: 9)
+                  SizedBox(height: 9),
                 ],
               ),
             ),

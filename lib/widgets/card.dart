@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:maruthimedical/theme/theme_providers.dart';
+import 'package:maruthimedical/providers/theme_providers.dart';
 import 'package:provider/provider.dart';
 
 class MyCard extends StatelessWidget {
