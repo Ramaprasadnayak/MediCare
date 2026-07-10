@@ -95,11 +95,12 @@ flutter run
 ## 📸 Screenshots
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Ramaprasadnayak/MediCare/aacbd560dd20df1ac708c3c2a5d7ccb8fdfd3013/home.jpeg" alt="Home Screen" width="230">
-  <img src="https://raw.githubusercontent.com/Ramaprasadnayak/MediCare/aacbd560dd20df1ac708c3c2a5d7ccb8fdfd3013/login.jpeg" alt="Login Screen" width="230">
-  <img src="https://raw.githubusercontent.com/Ramaprasadnayak/MediCare/aacbd560dd20df1ac708c3c2a5d7ccb8fdfd3013/cart.jpeg" alt="Cart Screen" width="230">
-  <img src="https://raw.githubusercontent.com/Ramaprasadnayak/MediCare/aacbd560dd20df1ac708c3c2a5d7ccb8fdfd3013/profile.jpeg" alt="Profile Screen" width="230">
+  <img src="https://raw.githubusercontent.com/Ramaprasadnayak/MediCare/aacbd560dd20df1ac708c3c2a5d7ccb8fdfd3013/home.jpeg" alt="Home" height="420">
+  <img src="https://raw.githubusercontent.com/Ramaprasadnayak/MediCare/aacbd560dd20df1ac708c3c2a5d7ccb8fdfd3013/login.jpeg" alt="Login" height="420">
+  <img src="https://raw.githubusercontent.com/Ramaprasadnayak/MediCare/aacbd560dd20df1ac708c3c2a5d7ccb8fdfd3013/cart.jpeg" alt="Cart" height="420">
+  <img src="https://raw.githubusercontent.com/Ramaprasadnayak/MediCare/aacbd560dd20df1ac708c3c2a5d7ccb8fdfd3013/profile.jpeg" alt="Profile" height="420">
 </p>
+
 ---
 
 ## 🚧 Upcoming Features
