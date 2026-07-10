@@ -32,3 +32,32 @@ Future<void> searchMedicine(String query,BuildContext context) async{
     );
   }
 }
+
+Future<List<Map<String, dynamic>>> searchPopularMedicine(BuildContext context) async{
+  try {
+    String apiUrl=dotenv.env["API_URL"]!;
+    final response=await http.get(
+      Uri.parse("$apiUrl/medicines/popular"),
+      headers: {"Content-Type": "application/json"}
+    );
+    final data = jsonDecode(response.body);
+    if (response.statusCode == 200 && data["message"] == "Medicines fetched successfully") {
+      List<Map<String, dynamic>> medicine=List<Map<String, dynamic>>.from(data["data"]);
+      return medicine;
+    }else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(data["message"] ?? "Something went wrong"),
+          backgroundColor: Colors.red,
+        ),
+      );
+      return [];
+    }
+  } catch (e) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text("Something went wrong :$e"),duration: Duration(seconds: 2),backgroundColor: Colors.red)
+    );
+    return [];
+  }
+}
+

@@ -19,7 +19,7 @@ class MyMedicineCard extends StatelessWidget {
     String medname = name.length > 25 ? "${name.substring(0, 25)}..." : name;
     return SizedBox(
       height: 330,
-      width: 205,
+      width: 200,
       child: Card(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -38,7 +38,7 @@ class MyMedicineCard extends StatelessWidget {
                   ),
                 ),
               ),
-              child: Image.asset(
+              child: Image.network(
                 medicine["image_url"],
                 width: double.infinity,
                 height: 140,

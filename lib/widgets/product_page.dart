@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:maruthimedical/features/authentication/login_screen.dart';
 import 'package:maruthimedical/services/cart_action.dart';
 import 'package:maruthimedical/widgets/button.dart';
+import 'package:maruthimedical/features/checkout/order_page.dart';
 
 class ProductPage extends StatefulWidget {
   final String medName, medUrl, category;
@@ -33,7 +34,7 @@ class _ProductPageState extends State<ProductPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Image.asset(widget.medUrl, width: double.infinity, height: 300),
+              Image.network(widget.medUrl, width: double.infinity, height: 300),
               SizedBox(height: 30),
               Text(
                 widget.medName,
@@ -56,12 +57,19 @@ class _ProductPageState extends State<ProductPage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Button(
+                  Button( 
                     height: 56,
                     width: 175,
                     text: "Buy Now",
                     borderRadius: 10,
-                    onpressed: () {},
+                    onpressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => OrderPage(),
+                          ),
+                        );
+                    },
                   ),
                   Button(
                     height: 56,

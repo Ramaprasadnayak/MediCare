@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:maruthimedical/features/home/caregories.dart';
+import 'package:maruthimedical/services/get_detail.dart';
 import 'package:maruthimedical/widgets/carosel.dart';
 import 'package:maruthimedical/services/search_medicine.dart';
+import 'package:maruthimedical/widgets/popular_medicine.dart';
 
 class HomePage extends StatefulWidget {
   final void Function(int) navigate;
@@ -13,6 +15,24 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   TextEditingController search = TextEditingController();
+  String username = "";
+  int? userId;
+  @override
+  void initState() {
+    super.initState();
+    getUserDetail();
+  }
+
+  Future<void> getUserDetail() async {
+    final name = await loadTokenSub();
+    final id=await loadTokenId();
+    if (name != null) {
+      setState(() {
+        username = name.length > 15 ? "${name.substring(0, 15)}..." : name;
+        userId=id;
+      });
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -66,6 +86,9 @@ class _HomePageState extends State<HomePage> {
                 fontWeight: FontWeight.bold,
               ),
             ),
+            SizedBox(height: 20),
+            // popular medicine widget 
+            PopularMedicine(userId: userId)
           ],
         ),
       ),

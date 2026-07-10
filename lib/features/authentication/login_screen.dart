@@ -31,7 +31,7 @@ class _LoginScreenState extends State<LoginScreen> {
           text: TextSpan(
             children: [
               TextSpan(
-                text: "Ramprasad ",
+                text: "Med ",
                 style: GoogleFonts.poppins(
                   fontSize: 24,
                   fontWeight: FontWeight.w600,
@@ -39,7 +39,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
               TextSpan(
-                text: "Nayak",
+                text: "Care",
                 style: GoogleFonts.poppins(
                   fontSize: 24,
                   fontWeight: FontWeight.w600,
