@@ -12,7 +12,7 @@ class _OrderSummaryState extends State<OrderSummary> {
   Widget build(BuildContext context) {
     return const Column(
       children: [
-
+        // add children here
       ],
     );
   }
