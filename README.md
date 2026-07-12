@@ -1,4 +1,4 @@
-# 💊 Maruthi Medical
+# 💊 MediCare
 
 A modern Flutter-based medical e-commerce application that allows users to browse medicines, search products instantly, manage their cart, and enjoy a clean, responsive shopping experience.
 
