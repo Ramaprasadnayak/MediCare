@@ -41,4 +41,6 @@ flutter:
     - assets/categories/personalcareicon.png
     - assets/categories/firstaidicon.png 
     - assets/categories/deviceicon.png 
-    - assets/categories/babycareicon.png 
+    - assets/categories/babycareicon.png
+    - assets/payment/cashondelivery.png
+    - assets/payment/razorpay.png

@@ -14,11 +14,12 @@ class _OrderTotalState extends State<OrderTotal> {
   Widget build(BuildContext context) {
     final cartProvider = context.watch<CartProvider>();
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(height: 20),
         Text(
           "Order Summary",
-          style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontSize: 20),
+          style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontSize: 25,fontWeight: FontWeight.bold),
         ),
         SizedBox(height: 20),
         Row(
@@ -69,8 +70,7 @@ class _OrderTotalState extends State<OrderTotal> {
               ).textTheme.bodyMedium?.copyWith(fontSize: 23),
             ),
             Text(
-              (cartProvider.grandTotal + cartProvider.deliveryFee)
-                  .toStringAsFixed(2),
+              cartProvider.amount.toStringAsFixed(2),
               style: Theme.of(
                 context,
               ).textTheme.bodyMedium?.copyWith(fontSize: 23),

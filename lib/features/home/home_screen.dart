@@ -47,9 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.person),
-          onPressed: () {
-            Navigator.pop(context);
-          },
+          onPressed: () {},
         ),
         title: Text("Ramprasad"),
         actions: [
