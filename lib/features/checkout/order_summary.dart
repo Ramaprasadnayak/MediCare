@@ -13,7 +13,7 @@ class _OrderSummaryState extends State<OrderSummary> {
     return const Column(
       children: [
         // add children here
-      ],
+      ], 
     );
   }
 }

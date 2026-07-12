@@ -1,13 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:maruthimedical/features/checkout/change_address.dart';
 
 class DeliveryAddress extends StatelessWidget {
-  const DeliveryAddress({super.key});
+  final int? uid;
+  final List<String> address;
+
+  const DeliveryAddress({
+    super.key,
+    required this.uid,
+    required this.address,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Card(
       child: Padding(
-        padding: EdgeInsets.all(20),
+        padding: const EdgeInsets.all(20),
         child: Column(
           children: [
             Row(
@@ -15,29 +23,35 @@ class DeliveryAddress extends StatelessWidget {
               children: [
                 Text(
                   "Delivery Address",
-                  style: Theme.of(
-                    context,
-                  ).textTheme.bodyMedium?.copyWith(fontSize: 25),
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyMedium
+                      ?.copyWith(fontSize: 25),
                 ),
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>ChangeAddress(id:uid,myaddress:address)));
+                  },
                   child: Text(
                     "Change",
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      fontSize: 18,
-                      color: Colors.blue,
-                    ),
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyMedium
+                        ?.copyWith(
+                          fontSize: 18,
+                          color: Colors.blue,
+                        ),
                   ),
                 ),
               ],
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Text(
-              "Rahul Sharma, 123 Main st, Mumbai, 574106.",
-              style: Theme.of(
-                context,
-              ).textTheme.bodyMedium?.copyWith(fontSize: 18),
-            ),
+              address[0],
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                fontSize: 25
+              )
+            )
           ],
         ),
       ),
