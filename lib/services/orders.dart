@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
@@ -18,11 +17,13 @@ Future<List<String>> getAddress(int? userid, BuildContext context) async {
     final data = jsonDecode(response.body);
 
     if (response.statusCode == 200) {
-      if (data["data"] == null) {
+      if (data["data"] == null || (data["data"] as List).isEmpty) {
         return ["No address saved yet."];
       }
 
-      return data["data"]["address"] ?? "No address saved yet.";
+      return (data["data"] as List)
+          .map<String>((item) => item["address"] as String)
+          .toList();
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -30,17 +31,16 @@ Future<List<String>> getAddress(int? userid, BuildContext context) async {
           backgroundColor: Colors.red,
         ),
       );
-      return [""];
+      return [];
     }
   } catch (e) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text("Something went wrong: $e"),
         backgroundColor: Colors.red,
-        duration: const Duration(seconds: 2),
       ),
     );
-    return [""];
+    return [];
   }
 }
 
@@ -66,20 +66,6 @@ Future<bool> postAddress(
     final data = jsonDecode(response.body);
 
     if (response.statusCode == 200) {
-      showDialog(
-        context: context,
-        builder: (_) => AlertDialog(
-          title: const Text("Success"),
-          content: const Text("Address updated successfully."),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: const Text("OK"),
-            ),
-          ],
-        ),
-      );
-
       return true;
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -99,5 +85,38 @@ Future<bool> postAddress(
       ),
     );
     return false;
+  }
+}
+
+Future<Map<String, dynamic>> getMedicine(int? medid,int? usrid, BuildContext context) async {
+  try {
+    String apiUrl = dotenv.env["API_URL"]!;
+
+    final response = await http.get(
+      Uri.parse("$apiUrl/order/getmedicine/$medid/$usrid"),
+      headers: {
+        "Content-Type": "application/json",
+      }, 
+    );
+    final data = jsonDecode(response.body);
+    if (response.statusCode == 200) {
+      return data["data"];
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(data["detail"] ?? "Something went wrong"),
+          backgroundColor: Colors.red,
+        ),
+      );
+      return {};
+    }
+  } catch (e) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text("Something went wrong: $e"),
+        backgroundColor: Colors.red,
+      ),
+    );
+    return {};
   }
 }

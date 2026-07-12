@@ -6,10 +6,12 @@ import 'package:provider/provider.dart';
 class MyCartMedicineCard extends StatefulWidget {
   final Map<String, dynamic> medicine;
   final int? userid;
+  final int qty;
   const MyCartMedicineCard({
     super.key,
     required this.medicine,
     required this.userid,
+    this.qty=1
   });
   @override
   State<MyCartMedicineCard> createState() => _MyCartMedicineCardState();
@@ -19,6 +21,7 @@ class _MyCartMedicineCardState extends State<MyCartMedicineCard> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Padding(
       padding: EdgeInsets.all(0),
       child: SizedBox(
@@ -64,13 +67,14 @@ class _MyCartMedicineCardState extends State<MyCartMedicineCard> {
                                     widget.medicine["medid"],
                                     context,
                                   );
+                                  setState(() {});
                                   context.read<CartProvider>().removeItem(
                                     widget.medicine["medid"],
                                   );
                                   Navigator.pop(context);
                                 },
                                 child: Text("OK"),
-                              ),
+                              ), 
                             ],
                           ),
                         );

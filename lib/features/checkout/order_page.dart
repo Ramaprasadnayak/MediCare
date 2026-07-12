@@ -1,30 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:maruthimedical/features/checkout/delivery_address.dart';
 import 'package:maruthimedical/features/checkout/order_summary.dart';
-import 'package:maruthimedical/features/checkout/payment_option.dart';
-import 'package:maruthimedical/services/orders.dart';
+import 'package:maruthimedical/features/checkout/order_summary2.dart';
+// import 'package:maruthimedical/features/checkout/payment_option.dart';
 
 class OrderPage extends StatefulWidget {
-  final int? userid;
-  const OrderPage({super.key,required this.userid});
+  final int? userid,medid;
+  
+  const OrderPage({super.key,required this.userid,this.medid});
   @override
   State<OrderPage> createState() => _OrderPageState();
 }
-
 class _OrderPageState extends State<OrderPage> {
-  List<String> addresses=[];
-  
-  @override
-  void initState() {
-    super.initState();
-    loadAddress();
-  }
-  void loadAddress() async {
-    List<String> address = await getAddress(widget.userid, context);;
-    setState(() {
-      addresses=address;
-    });
-  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,10 +23,11 @@ class _OrderPageState extends State<OrderPage> {
             children: [
               DeliveryAddress(
                 uid:widget.userid,
-                address:addresses
               ),  
-              OrderSummary(), 
-              PaymentOption()
+              SizedBox(height: 20),
+              widget.medid!=null?OrderSummary(userId:widget.userid,medid:widget.medid):OrderSummary2(userId: widget.userid),
+              SizedBox(height: 20),
+              // PaymentOption()
             ],
           ),
         ),

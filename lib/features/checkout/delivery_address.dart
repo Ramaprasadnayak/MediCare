@@ -1,15 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:maruthimedical/features/checkout/change_address.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class DeliveryAddress extends StatelessWidget {
+class DeliveryAddress extends StatefulWidget {
   final int? uid;
-  final List<String> address;
+  const DeliveryAddress({super.key, required this.uid});
 
-  const DeliveryAddress({
-    super.key,
-    required this.uid,
-    required this.address,
-  });
+  @override
+  State<DeliveryAddress> createState() => _DeliveryAddressState();
+}
+class _DeliveryAddressState extends State<DeliveryAddress> {
+  late Future<String> _selectedAddress;
+  
+  @override
+  void initState() {
+    super.initState();
+    _selectedAddress = getSelectedAddress();
+  }
+
+  Future<String> getSelectedAddress() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString("address") ?? "Login to add address";
+  }
+
+  Future<void> refreshAddress() async {
+    setState(() {
+      _selectedAddress = getSelectedAddress();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,29 +47,40 @@ class DeliveryAddress extends StatelessWidget {
                       ?.copyWith(fontSize: 25),
                 ),
                 TextButton(
-                  onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>ChangeAddress(id:uid,myaddress:address)));
-                  },
-                  child: Text(
-                    "Change",
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyMedium
-                        ?.copyWith(
-                          fontSize: 18,
-                          color: Colors.blue,
+                  onPressed: () async {
+                    final changed = await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => ChangeAddress(
+                          id: widget.uid
                         ),
-                  ),
+                      ),
+                    );
+
+                    if (changed == true) {
+                      refreshAddress();
+                    }
+                  },
+                  child: const Text("Change"),
                 ),
               ],
             ),
             const SizedBox(height: 20),
-            Text(
-              address[0],
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                fontSize: 25
-              )
-            )
+            FutureBuilder<String>(
+              future: _selectedAddress,
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return const CircularProgressIndicator();
+                }
+                return Text(
+                  snapshot.data!,
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyMedium
+                      ?.copyWith(fontSize: 20),
+                );
+              },
+            ),
           ],
         ),
       ),

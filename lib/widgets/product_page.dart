@@ -66,7 +66,7 @@ class _ProductPageState extends State<ProductPage> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => OrderPage(userid:widget.userid),
+                            builder: (context) => OrderPage(userid:widget.userid,medid:widget.medid),
                           ),
                         );
                     },

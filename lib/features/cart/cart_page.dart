@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:maruthimedical/features/cart/order_total.dart';
+import 'package:maruthimedical/features/checkout/order_page.dart';
 import 'package:maruthimedical/providers/cart_provider.dart';
 import 'package:maruthimedical/services/cart_action.dart';
 import 'package:maruthimedical/services/get_detail.dart';
+import 'package:maruthimedical/widgets/button.dart';
 import 'package:maruthimedical/widgets/mycart_medicinecard.dart';
 import 'package:provider/provider.dart';
 
@@ -62,81 +65,19 @@ class _CartPageState extends State<CartPage> {
                   .toList(),
             ), 
             SizedBox(height: 20),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Order Summary",
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    fontSize: 25,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                SizedBox(height: 20),
-                Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "Sub Total",
-                          style: Theme.of(
-                            context,
-                          ).textTheme.bodyMedium?.copyWith(fontSize: 20),
-                        ),
-                        Text(
-                          cartProvider.grandTotal.toStringAsFixed(2),
-                          style: Theme.of(
-                            context,
-                          ).textTheme.bodyMedium?.copyWith(fontSize: 20),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 10),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "Delivery Fee",
-                          style: Theme.of(
-                            context,
-                          ).textTheme.bodyMedium?.copyWith(fontSize: 20),
-                        ),
-                        Text(
-                          "₹${cartProvider.deliveryFee}",
-                          style: Theme.of(
-                            context,
-                          ).textTheme.bodyMedium?.copyWith(fontSize: 20),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 10),
-                    Divider(color: Colors.grey, thickness: 1),
-                    SizedBox(height: 10),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "Grand Total",
-                          style: Theme.of(
-                            context,
-                          ).textTheme.bodyMedium?.copyWith(fontSize: 23),
-                        ),
-                        Text(
-                          (cartProvider.grandTotal + cartProvider.deliveryFee).toStringAsFixed(2),
-                          style: Theme.of(
-                            context,
-                          ).textTheme.bodyMedium?.copyWith(fontSize: 23),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ],
-            ),
+            OrderTotal(),
+            SizedBox(height: 20),
+            Button(
+              height: 70, 
+              width: double.infinity, 
+              text: "Proceed TO Buy", 
+              onpressed: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>OrderPage(userid: userId)));
+              }
+            )
           ],
         ),
       ),
-    );
+    ); 
   }
 }
