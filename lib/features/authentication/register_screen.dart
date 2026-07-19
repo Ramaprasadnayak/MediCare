@@ -18,6 +18,35 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
+    void validateInput(){
+      if (usrname.text.isEmpty || password.text.isEmpty) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text("Textfield cant be empty"),
+            duration: Duration(seconds: 2),
+          ),
+        );
+      }
+      else if (usrname.text.trim().length < 8 || password.text.trim().length < 8) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text("Must contain at least 8 characters"),
+            duration: Duration(seconds: 2),
+          ),
+        );
+      }
+      else if (phno.text.trim().length != 10) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text("phone number must be in 10 numbers"),
+            duration: Duration(seconds: 2),
+          ),
+        );
+      }
+      else{
+        register(context,usrname,phno,password);
+      }
+    }
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -113,7 +142,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 height: 56,
                 width: 380,
                 text: "Register",
-                onpressed: ()=>register(context,usrname,phno,password),
+                onpressed: ()=>validateInput(),
               ),
               const SizedBox(height: 18),
               RichText(

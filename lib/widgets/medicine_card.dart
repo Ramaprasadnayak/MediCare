@@ -43,6 +43,20 @@ class MyMedicineCard extends StatelessWidget {
                 width: double.infinity,
                 height: 140,
                 fit: BoxFit.cover,
+                loadingBuilder: (context, child, loadingProgress) {
+                  if (loadingProgress == null) return child;
+
+                  return const SizedBox(
+                    height: 140,
+                    child: Center(child: CircularProgressIndicator()),
+                  );
+                },
+                errorBuilder: (context, error, stackTrace) {
+                  return const SizedBox(
+                    height: 140,
+                    child: Icon(Icons.broken_image, size: 50),
+                  );
+                },
               ),
             ),
             Padding(

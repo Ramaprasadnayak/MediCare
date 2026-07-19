@@ -24,6 +24,8 @@ Future<void> register(BuildContext context,TextEditingController usrname,TextEdi
       final prefs = await SharedPreferences.getInstance();
       await prefs.setString("access_token", accessToken);
       await prefs.setString("refresh_token", refreshToken);
+      await prefs.setString("address", "No address saved yet");
+      if (!context.mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text("Registration Successful"),
@@ -36,6 +38,7 @@ Future<void> register(BuildContext context,TextEditingController usrname,TextEdi
         MaterialPageRoute(builder: (context) => const HomeScreen()),
       );
     } else {
+      if (!context.mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(data["message"] ?? "Registration Failed"),
@@ -69,12 +72,14 @@ Future<void> login(BuildContext context,TextEditingController usrname,TextEditin
       final prefs = await SharedPreferences.getInstance();
       await prefs.setString("access_token", accessToken);
       await prefs.setString("refresh_token", refreshToken);
+      if (!context.mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("Login Successful"),backgroundColor: Colors.green,duration: Duration(seconds: 2))
       );
       Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>const HomeScreen()));
     }
     else {
+      if (!context.mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(data["message"] ?? "incorrect username or password"),
@@ -87,5 +92,33 @@ Future<void> login(BuildContext context,TextEditingController usrname,TextEditin
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(content: Text("Error: $e"),backgroundColor: Colors.red,duration: Duration(seconds: 2),)
     );
+  }
+}
+
+Future<bool> refreshAccessToken() async {
+  try {
+    final prefs = await SharedPreferences.getInstance();
+    final refreshToken = prefs.getString("refresh_token");
+    if (refreshToken == null) {
+      return false;
+    }
+    String apiUrl = dotenv.env["API_URL"]!;
+    final response = await http.post(
+      Uri.parse("$apiUrl/refresh"),
+      headers: {
+        "Authorization": "Bearer $refreshToken",
+      },
+    );
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      await prefs.setString(
+        "access_token",
+        data["access_token"],
+      );
+      return true;
+    }
+    return false;
+  } catch (e) {
+    return false;
   }
 }

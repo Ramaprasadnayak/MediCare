@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:maruthimedical/features/home/home_screen.dart';
 import 'package:maruthimedical/widgets/button.dart';
 import 'package:maruthimedical/widgets/text_field.dart';
 import "./register_screen.dart";
@@ -18,13 +19,34 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    void validateInput(){
+      if (usrname.text.isEmpty || password.text.isEmpty) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text("Textfield cant be empty"),
+            duration: Duration(seconds: 2),
+          ),
+        );
+      }
+      else if (usrname.text.trim().length < 6 || password.text.trim().length < 6) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text("Must contain at least 6 characters"),
+          ),
+        );
+      }
+      
+      else{
+        login(context, usrname, password);
+      }
+    }
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios_new),
           onPressed: () {
-            Navigator.pop(context);
+            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>HomeScreen()));
           },
         ),
         title: RichText(
@@ -99,7 +121,12 @@ class _LoginScreenState extends State<LoginScreen> {
                   ], 
                 ),
                 const SizedBox(height: 40),
-                Button(height: 56, width: 380, text: "Login",onpressed: ()=>login(context, usrname, password)),
+                Button(
+                  height: 56, 
+                  width: 380, 
+                  text: "Login",
+                  onpressed: ()=>validateInput()
+                ),
                 const SizedBox(height: 18),
                 RichText(
                   text: TextSpan(

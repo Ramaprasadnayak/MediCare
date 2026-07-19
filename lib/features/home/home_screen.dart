@@ -5,6 +5,7 @@ import 'package:maruthimedical/features/home/home_page.dart';
 import 'package:maruthimedical/features/profile/profile_page.dart';
 import 'package:maruthimedical/features/notification/notification.dart';
 import 'package:maruthimedical/features/authentication/login_screen.dart';
+import 'package:maruthimedical/services/get_detail.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -15,15 +16,25 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int selectedIndex = 0;
-
-  void setTheme(int idx) async {
-    final prefs = await SharedPreferences.getInstance();
-    prefs.setInt("theme", idx);
-  }
-
+  String username = "";
   @override
   void initState() {
     super.initState();
+    getUsername();
+  }
+
+  Future<void> getUsername() async {
+    final name = await loadTokenSub();
+
+    if (name != null) {
+      setState(() {
+        username = name.length > 15 ? "${name.substring(0, 15)}..." : name;
+      });
+    }
+  }
+  void setTheme(int idx) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setInt("theme", idx);
   }
 
   void navigateBottonBar(int index) {
@@ -49,12 +60,12 @@ class _HomeScreenState extends State<HomeScreen> {
           icon: const Icon(Icons.person),
           onPressed: () {},
         ),
-        title: Text("Ramprasad"),
+        title: Text(username), 
         actions: [
           IconButton(
             onPressed: () {
               Navigator.push(
-                context,
+                context, 
                 MaterialPageRoute(builder: (context) => LoginScreen()),
               );
             },

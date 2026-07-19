@@ -29,15 +29,21 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    final VoidCallback? onpress = null;
+    final VoidCallback? changeTheme=null;
+    final VoidCallback? changePhoneno=null;
+    final VoidCallback? changePassword=null;
+    final VoidCallback? contact=null;
+    final VoidCallback? deleteAcc=null;
+    final VoidCallback? logout=null;
+
 
     Map<int, List<Object?>> profileOptions = {
-      1: [Icons.light_mode_rounded, "Change Theme", true, onpress],
-      2: [Icons.phone_android_rounded, "Change Phone Number", false, null],
-      3: [Icons.lock_reset_rounded, "Change Password", false, null],
-      4: [Icons.support_agent_rounded, "Contact Us", false, null],
-      5: [Icons.delete_forever_rounded, "Delete Account", false, null],
-      6: [Icons.logout_rounded, "Logout", false, null],
+      1: [Icons.light_mode_rounded, "Change Theme", true, changeTheme],
+      2: [Icons.phone_android_rounded, "Change Phone Number", false, changePhoneno],
+      3: [Icons.lock_reset_rounded, "Change Password", false, changePassword],
+      4: [Icons.support_agent_rounded, "Contact Us", false, contact],
+      5: [Icons.delete_forever_rounded, "Delete Account", false, deleteAcc],
+      6: [Icons.logout_rounded, "Logout", false, logout],
     };
     return SafeArea(
       child: SingleChildScrollView(
