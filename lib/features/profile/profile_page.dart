@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:maruthimedical/features/profile/profile_pic.dart';
 import 'package:maruthimedical/services/get_detail.dart';
 import 'package:maruthimedical/widgets/card.dart';
 
@@ -36,7 +37,6 @@ class _ProfilePageState extends State<ProfilePage> {
     final VoidCallback? deleteAcc=null;
     final VoidCallback? logout=null;
 
-
     Map<int, List<Object?>> profileOptions = {
       1: [Icons.light_mode_rounded, "Change Theme", true, changeTheme],
       2: [Icons.phone_android_rounded, "Change Phone Number", false, changePhoneno],
@@ -58,7 +58,17 @@ class _ProfilePageState extends State<ProfilePage> {
               child: Icon(Icons.person, size: 60, color: Colors.grey.shade700),
             ),
             SizedBox(height: 15),
-            OutlinedButton(onPressed: () {}, child: const Text("Edit Profile")),
+            OutlinedButton(
+              onPressed: () {
+                showModalBottomSheet(
+                  context: context, 
+                  builder: (context){
+                    return ProfilePic();
+                  },
+                );
+              }, 
+              child: const Text("Edit Profile")
+            ),
             SizedBox(height: 20),
             Column(
               children: profileOptions.entries.map((entry) {

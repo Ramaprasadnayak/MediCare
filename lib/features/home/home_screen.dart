@@ -49,7 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final List<Widget> pages = [
       HomePage(navigate:navigateBottonBar),
       CategoryPage(),
-      Text("orders"),
+      Center(child:Text("in progress")),
       CartPage(),
       ProfilePage(),
     ];
@@ -77,7 +77,10 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       ),
-      body: pages[selectedIndex],
+      body: IndexedStack(
+        index: selectedIndex,
+        children: pages,
+      ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         currentIndex: selectedIndex,

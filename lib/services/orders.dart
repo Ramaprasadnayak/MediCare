@@ -188,7 +188,7 @@ Future<Map<String, dynamic>> getMedicine(int? medid,int? usrid, BuildContext con
 
 
 
-Future<void> deleteAddress(int? addressid,int? uid,BuildContext context) async {
+Future<bool> deleteAddress(int? addressid,int? uid,BuildContext context) async {
   try {
     final prefs = await SharedPreferences.getInstance();
     final accessToken = prefs.getString("access_token");
@@ -201,20 +201,23 @@ Future<void> deleteAddress(int? addressid,int? uid,BuildContext context) async {
         "Authorization": "Bearer $accessToken"
       },
       body: jsonEncode({
-        "address":addressid,
-        "userid":uid
+        "userid":uid,
+        "addressid":addressid
       })
     );
     final data = jsonDecode(response.body);
-    if(response.statusCode == 401 && data["detail"] == "Invalid or expired token"){
-      if (!context.mounted) return;
+    if(response.statusCode == 200 && data["detail"] == "Address deleted successfully"){
+      return true;
+    }
+    else if(response.statusCode == 401 && data["detail"] == "Invalid or expired token"){
+      if (!context.mounted) return false;
       bool refreshed=await refreshAccessToken();
       if(refreshed){
-        if(!context.mounted) return;
+        if(!context.mounted) return false;
         return deleteAddress(addressid,uid, context);
       }
       else{
-        if (!context.mounted) return;
+        if (!context.mounted) return false;
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text("Login to delete address"),
@@ -222,18 +225,18 @@ Future<void> deleteAddress(int? addressid,int? uid,BuildContext context) async {
           ),
         );
         Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginScreen()));
-        return;
+        return false;
       }
     } 
     else {
-      if (!context.mounted) return;
+      if (!context.mounted) return false;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(data["detail"] ?? "Something went wrong"),
           backgroundColor: Colors.red,
         ),
       );
-      return;
+      return false;
     }
   } catch (e) {
     ScaffoldMessenger.of(context).showSnackBar(
@@ -243,6 +246,6 @@ Future<void> deleteAddress(int? addressid,int? uid,BuildContext context) async {
         duration: const Duration(seconds: 2),
       ),
     );
-    return;
+    return false;
   }
 }

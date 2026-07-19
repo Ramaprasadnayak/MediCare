@@ -84,8 +84,15 @@ class _ChangeAddressState extends State<ChangeAddress> {
                               ),
                             ),
                             IconButton(
-                              onPressed: () {
-                                deleteAddress(addresses[index]["addressid"], widget.id, context);
+                              onPressed: () async {
+                                bool success = await deleteAddress(
+                                  addresses[index]["addressid"],
+                                  widget.id,
+                                  context,
+                                );
+                                if (success) {
+                                  await loadAddress();
+                                }
                               },
                               icon: const Icon(
                                 Icons.delete_outline,

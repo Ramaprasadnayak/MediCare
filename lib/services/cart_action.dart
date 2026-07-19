@@ -5,7 +5,8 @@ import 'package:http/http.dart' as http;
 import 'package:maruthimedical/features/authentication/login_screen.dart';
 import 'package:maruthimedical/services/login_register.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:provider/provider.dart';
+import 'package:maruthimedical/providers/cart_provider.dart';
  
 Future<List<Map<String, dynamic>>> cartSearch(int? userid,BuildContext context) async{
   try {
@@ -91,6 +92,10 @@ Future<void> addToCart(int? userid,int medid,BuildContext context) async{
           ),
         ],
       ),);
+      if (!context.mounted) return;
+      final cart = await cartSearch(userid, context);
+      if (!context.mounted) return;
+      context.read<CartProvider>().setCart(cart);
     }
     else if(response.statusCode == 401 && data["detail"] == "Invalid or expired token"){
       bool refreshed=await refreshAccessToken();

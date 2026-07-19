@@ -38,7 +38,7 @@ class _OrderPageState extends State<OrderPage> {
                 width: double.infinity, 
                 text: "Proceed TO Buy, ${cartProvider.amount}", 
                 onpressed: (){
-
+                  // comming soon
                 }
               ),
               SizedBox(height: 20),
