@@ -19,9 +19,11 @@ Future<void> register(BuildContext context,TextEditingController usrname,TextEdi
     );
     final data = jsonDecode(response.body);
     if (response.statusCode == 200 && data["message"] == "Registration Successful") {
-      final String token = data["access_token"];
+      final String accessToken = data["access_token"];
+      final String refreshToken = data["refresh_token"];
       final prefs = await SharedPreferences.getInstance();
-      await prefs.setString("access_token", token);
+      await prefs.setString("access_token", accessToken);
+      await prefs.setString("refresh_token", refreshToken);
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text("Registration Successful"),
@@ -62,9 +64,11 @@ Future<void> login(BuildContext context,TextEditingController usrname,TextEditin
     );
     final data=jsonDecode(response.body);
     if(response.statusCode==200 && data["message"]=="Login Successful"){
-      final String token = data["access_token"];
+      final String accessToken = data["access_token"];
+      final String refreshToken = data["refresh_token"];
       final prefs = await SharedPreferences.getInstance();
-      await prefs.setString("access_token", token);
+      await prefs.setString("access_token", accessToken);
+      await prefs.setString("refresh_token", refreshToken);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("Login Successful"),backgroundColor: Colors.green,duration: Duration(seconds: 2))
       );
